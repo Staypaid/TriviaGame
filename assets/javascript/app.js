@@ -1,10 +1,10 @@
-//game start
+//game start. counter starts at 30 in #quiz-area
 var panel = $('#quiz-area');
 var countStartNumber = 30;
 
 
 // set on.click events
-
+//start over after game play
 $(document).on('click', '#start-over', function(e) {
   game.reset();
 });
@@ -12,7 +12,7 @@ $(document).on('click', '#start-over', function(e) {
 $(document).on('click', '.answer-button', function(e) {
   game.clicked(e);
 });
-
+//start game
 $(document).on('click', '#start', function(e) {
   $('#subwrapper').prepend('<h2>Time Remaining: <span id="counter-number">30</span> Seconds</h2>');
   game.loadQuestion();
@@ -64,7 +64,13 @@ var questions = [{
 
 
 
-//make the timer and count number of correct answers
+//make the timer show the countStartNumber
+//questions display starting at index 0
+//count number of correct  and incorrect answers
+//reset timer after answer
+//display total correct and incorrect
+
+
 var game = {
   questions:questions,
   currentQuestion:0,
@@ -93,6 +99,8 @@ var game = {
     game.currentQuestion++;
     game.loadQuestion();
   },
+
+  //calls the function when time runs out, displays 'Out of Time!' displays correct answer and image, then moves to next question
   timeUp: function (){
     clearInterval(timer);
     $('#counter-number').html(game.counter);
@@ -107,6 +115,8 @@ var game = {
       setTimeout(game.nextQuestion, 3 * 1000);
     }
   },
+
+  //game resulrs and counter
   results: function() {
     clearInterval(timer);
 
@@ -126,6 +136,8 @@ var game = {
       this.answeredIncorrectly();
     }
   },
+
+  //shows 'Nope' for wrong answer, displays correct answer and resets timer
   answeredIncorrectly: function() {
     game.incorrect++;
     clearInterval(timer);
@@ -139,6 +151,8 @@ var game = {
       setTimeout(game.nextQuestion, 3 * 1000);
     }
   },
+
+  //displays 'Correct!' for right answers and displays image, resets timer
   answeredCorrectly: function(){
     clearInterval(timer);
     game.correct++;
